@@ -1,19 +1,24 @@
-// src/helpers/MenuHelper.java
+/*
+ * Clase para mostrar el menú de opciones del sistema de renta de vehículos
+ */
 
 package helpers;
 
 import java.util.Scanner;
 
+// Clase para mostrar el menú de opciones del sistema de renta de vehículos
 public class MenuHelper {
 
-    private Scanner scanner;
-    private GestorVehiculoHelper gestorVehiculoHelper;
+    private Scanner scanner; // Scanner para entrada de usuario
+    private GestorVehiculoHelper gestorVehiculoHelper; // Helper para gestionar vehículos
 
+    // Constructor que inicializa el helper del gestor de vehículos
     public MenuHelper(GestorVehiculoHelper gestorVehiculoHelper) {
         this.gestorVehiculoHelper = gestorVehiculoHelper;
-        this.scanner = new Scanner(System.in);
+        this.scanner = new Scanner(System.in); // Inicializa el scanner para leer entrada del usuario
     }
 
+    // Método para mostrar el menú y obtener la opción seleccionada por el usuario
     public int mostrarMenu() {
         System.out.println("======================================================================================");
         System.out.println("                    BIENVENIDOS AL SISTEMA RENT A CAR  BRIEFDRIVE                    ");
@@ -30,6 +35,6 @@ public class MenuHelper {
         System.out.println("7. Devolver Vehículo");
         System.out.println("0. Salir");
 
-        return scanner.nextInt();
+        return scanner.nextInt(); // Lee y devuelve la opción seleccionada por el usuario
     }
 }

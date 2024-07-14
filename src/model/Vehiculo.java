@@ -1,15 +1,20 @@
-// model/Vehiculo.java
+/*
+ * La clase Vehiculo es una clase abstracta que representa un vehículo con atributos como patente, marca, modelo, precio diario, si es para arriendo de largo plazo y estado. 
+ * Incluye un constructor para inicializar estos atributos y métodos getter y setter para acceder y modificarlos.
+ */
 
 package model;
 
+// Clase abstracta para representar un vehículo
 public abstract class Vehiculo {
-    protected String patente;
-    protected String marca;
-    protected String modelo;
-    protected double precioDiario;
-    protected boolean arriendoLargoPlazo;
-    protected String estado;
+    private String patente;
+    private String marca;
+    private String modelo;
+    private double precioDiario;
+    private boolean arriendoLargoPlazo;
+    private String estado;
 
+    // Constructor de la clase Vehiculo
     public Vehiculo(String patente, String marca, String modelo, double precioDiario, boolean arriendoLargoPlazo, String estado) {
         this.patente = patente;
         this.marca = marca;
@@ -19,6 +24,7 @@ public abstract class Vehiculo {
         this.estado = estado;
     }
 
+    // Métodos getter y setter para los atributos de la clase
     public String getPatente() {
         return this.patente;
     }
@@ -55,6 +61,10 @@ public abstract class Vehiculo {
         return this.arriendoLargoPlazo;
     }
 
+    public Boolean getArriendoLargoPlazo() {
+        return this.arriendoLargoPlazo;
+    }
+
     public void setArriendoLargoPlazo(boolean arriendoLargoPlazo) {
         this.arriendoLargoPlazo = arriendoLargoPlazo;
     }
@@ -67,8 +77,10 @@ public abstract class Vehiculo {
         this.estado = estado;
     }
 
+    // Método abstracto para obtener detalles específicos del vehículo
     public abstract String getDetalles();
 
+    // Sobrescritura de métodos equals y hashCode para comparar vehículos por patente
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

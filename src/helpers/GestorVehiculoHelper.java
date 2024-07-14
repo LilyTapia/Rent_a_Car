@@ -1,4 +1,8 @@
-// src/helpers/GestorVehiculoHelper.java
+/*
+ * La Clase GestorVehiculoHelper en Java es una clase auxiliar dentro del paquete helpers
+ * Facilita la interacción con un sistema de gestión de vehículos. 
+ * Contiene métodos para agregar, buscar, eliminar, listar y arrendar vehículos.
+ */
 
 package helpers;
 
@@ -15,16 +19,19 @@ import model.Vehiculo;
 import model.VehiculoCarga;
 import model.VehiculoPasajeros;
 
+// Helper para interactuar con el gestor de vehículos, proporciona métodos para agregar, buscar, eliminar, listar y arrendar vehículos
 public class GestorVehiculoHelper {
 
-    private GestorVehiculo gestorVehiculo;
-    private Scanner scanner;
+    private final GestorVehiculo gestorVehiculo; // Instancia del gestor de vehículos
+    private final Scanner scanner; // Scanner para entrada de usuario
 
+    // Constructor que inicializa el helper con un gestor de vehículos dado
     public GestorVehiculoHelper(GestorVehiculo gestorVehiculo) {
         this.gestorVehiculo = gestorVehiculo;
-        this.scanner = new Scanner(System.in);
+        this.scanner = new Scanner(System.in); // Inicializa el scanner para leer entrada del usuario
     }
 
+    // Método para agregar un vehículo al sistema
     public void agregarVehiculo() throws IOException {
         System.out.println("Ingrese tipo de vehículo (carga/pasajeros):");
         String tipo = scanner.nextLine().toLowerCase();
@@ -66,6 +73,7 @@ public class GestorVehiculoHelper {
         }
     }
 
+    // Método para buscar un vehículo por su patente
     public void buscarVehiculo() {
         System.out.println("Ingrese patente del vehículo a buscar:");
         String patente = scanner.nextLine();
@@ -77,6 +85,7 @@ public class GestorVehiculoHelper {
         }
     }
 
+    // Método para eliminar un vehículo por su patente
     public void eliminarVehiculo() {
         System.out.println("Ingrese patente del vehículo a eliminar:");
         String patente = scanner.nextLine();
@@ -88,10 +97,12 @@ public class GestorVehiculoHelper {
         }
     }
 
+    // Método para listar todos los vehículos
     public void listarVehiculos() {
         gestorVehiculo.listarVehiculos();
     }
 
+    // Método para arrendar un vehículo por su patente
     public boolean arrendarVehiculoPorPatente() {
         System.out.println("Ingrese patente del vehículo a arrendar:");
         String patente = scanner.nextLine();
@@ -116,6 +127,7 @@ public class GestorVehiculoHelper {
         return false; // No se pudo arrendar el vehículo
     }
 
+    // Método para devolver un vehículo por su patente
     public boolean devolverVehiculoPorPatente() {
         System.out.println("Ingrese patente del vehículo a devolver:");
         String patente = scanner.nextLine();
@@ -141,6 +153,7 @@ public class GestorVehiculoHelper {
         return false; // No se pudo devolver el vehículo
     }
 
+    // Método para mostrar la boleta de arriendo de un vehículo por su patente
     public void mostrarBoleta() {
         System.out.println("Ingrese patente del vehículo para mostrar la boleta:");
         String patente = scanner.nextLine();
@@ -159,7 +172,7 @@ public class GestorVehiculoHelper {
         }
     }
     
-    
+    // Método para obtener la lista de vehículos que permiten arriendo a largo plazo
     public List<Vehiculo> obtenerVehiculosArriendoLargoPlazo() {
         List<Vehiculo> vehiculosArriendoLargoPlazo = new ArrayList<>();
         for (Vehiculo vehiculo : gestorVehiculo.getVehiculos().values()) {
@@ -170,11 +183,8 @@ public class GestorVehiculoHelper {
         return vehiculosArriendoLargoPlazo;
     }
     
-    // Getter para obtener la lista de vehículos
+    // Getter para obtener la lista de vehículos del gestor de vehículos
     public Map<String, Vehiculo> getVehiculos() {
         return gestorVehiculo.getVehiculos();
     }
-
-    
-    
 }

@@ -9,5 +9,6 @@ carga,test,carga,test,100.0,150.0,false,Arrendado
 pasajeros,test2,pasajeros,test2,100.0,10,false,Disponible
 carga,zxc,zxc,zxc,200.0,898989.0,true,Arrendado
 carga,fgh,fgh,fgh,100.0,20000.0,true,Disponible
-pasajeros,ASDASD,Chevrolet,Malibu,37000.0,5,true,Arrendado
+pasajeros,ASDASD,Chevrolet,Malibu,37000.0,5,true,Disponible
 carga,QWEQWE,Peterbilt,579,106000.75,26000,false,Disponible
+carga,zzz,zzz,zzz,1000.0,100100.0,true,Disponible
