@@ -1,3 +1,5 @@
+// data/VehiculoYaExistenteException.java
+
 package data;
 
 public class VehiculoYaExistenteException extends Exception {

@@ -1,3 +1,5 @@
+// data/LectorCSV.java
+
 package data;
 
 import java.io.BufferedReader;
@@ -14,12 +16,7 @@ public class LectorCSV {
         List<String[]> datos = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
             String linea;
-            boolean isFirstLine = true;
             while ((linea = br.readLine()) != null) {
-                if (isFirstLine) {
-                    isFirstLine = false; // Omitir la primera línea
-                    continue;
-                }
                 String[] valores = linea.split(",");
                 datos.add(valores);
             }
