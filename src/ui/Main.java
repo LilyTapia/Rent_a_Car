@@ -1,120 +1,64 @@
+/*
+* El archivo Main.java es el punto de entrada de una aplicación Java para gestionar vehículos. 
+* Utiliza clases auxiliares (GestorVehiculo, GestorVehiculoHelper, MenuHelper) para realizar operaciones como agregar, buscar, eliminar y listar vehículos, además de manejar el arriendo. 
+* El programa corre en un ciclo infinito, mostrando un menú para que el usuario elija operaciones, y maneja excepciones de entrada/salida con un bloque try-catch.
+*/
+
 package ui;
 
 import data.GestorVehiculo;
-import data.VehiculoNoEncontradoException;
-import data.VehiculoYaExistenteException;
+import helpers.GestorVehiculoHelper;
+import helpers.MenuHelper;
 import java.io.IOException;
-import java.util.Scanner;
-import model.Vehiculo;
-import model.VehiculoCarga;
-import model.VehiculoPasajeros;
 
 public class Main {
 
-    private static Scanner scanner = new Scanner(System.in);
-    private static GestorVehiculo gestorVehiculo = new GestorVehiculo();
+    // Instancias de gestores y helpers necesarios para la aplicación
+    private static final GestorVehiculo gestorVehiculo = new GestorVehiculo();  // Instancia del gestor de vehículos
+    private static final GestorVehiculoHelper gestorVehiculoHelper = new GestorVehiculoHelper(gestorVehiculo);  // Helper para operaciones con vehículos
+    private static final MenuHelper menuHelper = new MenuHelper(gestorVehiculoHelper);  // Helper para mostrar y procesar el menú
 
     public static void main(String[] args) throws IOException {
+        // Ciclo principal de la aplicación que se ejecuta continuamente
         while (true) {
-            mostrarMenu();
-            int opcion = scanner.nextInt();
-            scanner.nextLine();  // Consumir el salto de línea
+            // Mostrar el menú y obtener la opción seleccionada por el usuario
+            int opcion = menuHelper.mostrarMenu();
 
-            switch (opcion) {
-                case 1:
-                    agregarVehiculo();
-                    break;
-                case 2:
-                    buscarVehiculo();
-                    break;
-                case 3:
-                    eliminarVehiculo();
-                    break;
-                case 4:
-                    listarVehiculos();
-                    break;
-                case 0:
-                    System.exit(0);
-                default:
-                    System.out.println("Opción no válida.");
+            try {
+                // Según la opción seleccionada por el usuario, ejecutar la acción correspondiente
+                switch (opcion) {
+                    case 1:
+                        gestorVehiculoHelper.agregarVehiculo();  // Opción para agregar un nuevo vehículo
+                        break;
+                    case 2:
+                        gestorVehiculoHelper.buscarVehiculo();  // Opción para buscar un vehículo por criterio
+                        break;
+                    case 3:
+                        gestorVehiculoHelper.eliminarVehiculo();  // Opción para eliminar un vehículo existente
+                        break;
+                    case 4:
+                        gestorVehiculoHelper.listarVehiculos();  // Opción para listar todos los vehículos registrados
+                        break;
+                    case 5:
+                        gestorVehiculoHelper.mostrarBoleta();  // Opción para mostrar la boleta de arriendo
+                        break;
+                    case 6:
+                        gestorVehiculoHelper.arrendarVehiculoPorPatente();  // Opción para arrendar un vehículo por patente
+                        break;
+                    case 7:
+                        gestorVehiculoHelper.devolverVehiculoPorPatente();  // Opción para devolver un vehículo arrendado por patente
+                        break;
+                    case 0:
+                        // Salir de la aplicación si se selecciona la opción 0
+                        System.exit(0);
+                    default:
+                        // Mostrar mensaje de opción no válida si la opción seleccionada no existe
+                        System.out.println("Opción no válida.");
+                }
+            } catch (IOException e) {
+                // Capturar y mostrar errores de entrada/salida
+                System.out.println("Ocurrió un error de entrada/salida: " + e.getMessage());
             }
         }
-    }
-
-    private static void mostrarMenu() {
-
-        System.out.println("======================================================================================");
-        System.out.println("                    BIENVENIDOS AL SISTEMA RENT A CAR  BRIEFDRIVE                    ");
-        System.out.println("======================================================================================");
-
-        System.out.println("                                                                                      ");
-        System.out.println("Seleccione una opción:");
-        System.out.println("1. Agregar Vehículo");
-        System.out.println("2. Buscar Vehículo");
-        System.out.println("3. Eliminar Vehículo");
-        System.out.println("4. Listar Vehículos");
-        System.out.println("5. Mostrar boleta");
-        System.out.println("0. Salir");
-
-    }
-
-    private static void agregarVehiculo() throws IOException {
-        System.out.println("Ingrese tipo de vehículo (carga/pasajeros):");
-        String tipo = scanner.nextLine();
-        System.out.println("Ingrese patente:");
-        String patente = scanner.nextLine();
-        System.out.println("Ingrese marca:");
-        String marca = scanner.nextLine();
-        System.out.println("Ingrese modelo:");
-        String modelo = scanner.nextLine();
-        System.out.println("Ingrese precio diario:");
-        double precioDiario = scanner.nextDouble();
-        scanner.nextLine();  // Consumir el salto de línea
-
-        Vehiculo vehiculo;
-        if ("carga".equalsIgnoreCase(tipo)) {
-            System.out.println("Ingrese capacidad de carga:");
-            double capacidadCarga = scanner.nextDouble();
-            scanner.nextLine();  // Consumir el salto de línea
-            vehiculo = new VehiculoCarga(patente, marca, modelo, precioDiario, capacidadCarga);
-        } else {
-            System.out.println("Ingrese número de pasajeros:");
-            int numeroPasajeros = scanner.nextInt();
-            scanner.nextLine();  // Consumir el salto de línea
-            vehiculo = new VehiculoPasajeros(patente, marca, modelo, precioDiario, numeroPasajeros);
-        }
-
-        try {
-            gestorVehiculo.agregarVehiculo(vehiculo);
-            System.out.println("Vehículo agregado exitosamente.");
-        } catch (VehiculoYaExistenteException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private static void buscarVehiculo() {
-        System.out.println("Ingrese patente del vehículo a buscar:");
-        String patente = scanner.nextLine();
-        try {
-            Vehiculo vehiculo = (Vehiculo) gestorVehiculo.buscarVehiculo(patente);
-            System.out.println("Vehículo encontrado: " + vehiculo.getDetalles());
-        } catch (VehiculoNoEncontradoException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private static void eliminarVehiculo() throws IOException {
-        System.out.println("Ingrese patente del vehículo a eliminar:");
-        String patente = scanner.nextLine();
-        try {
-            gestorVehiculo.eliminarVehiculo(patente);
-            System.out.println("Vehículo eliminado exitosamente.");
-        } catch (VehiculoNoEncontradoException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private static void listarVehiculos() {
-        gestorVehiculo.listarVehiculos();
     }
 }
